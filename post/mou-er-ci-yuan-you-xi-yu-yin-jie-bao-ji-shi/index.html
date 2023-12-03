@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>某二次元游戏语音解包纪实 | 一片雨夹雪云</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mizore.cloud/favicon.ico?v=1701610202259">
+<link rel="stylesheet" href="https://mizore.cloud/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1. 背景
+提取游戏语音用于炼丹训练集
+2. 方法
+2.1 提取语音包
+某游戏语音包位置：A 2-jigen Game/A 2-jigen Game/A 2-jigen Game_Data/StreamingAssets/Audio/Gen..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://mizore.cloud">
+        <img src="https://mizore.cloud/images/avatar.png?v=1701610202259" class="site-logo">
+        <h1 class="site-title">一片雨夹雪云</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      きみの全部が好き
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> · <a href="https://xsky123.com">Ideahouse</a> | <a class="rss" href="https://mizore.cloud/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">某二次元游戏语音解包纪实</h2>
+            <div class="post-date">2023-03-08</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="1-背景">1. 背景</h1>
+<p>提取游戏语音用于炼丹训练集</p>
+<h1 id="2-方法">2. 方法</h1>
+<h2 id="21-提取语音包">2.1 提取语音包</h2>
+<p>某游戏语音包位置：<code>A 2-jigen Game/A 2-jigen Game/A 2-jigen Game_Data/StreamingAssets/Audio/GeneratedSoundBanks/Windows/Japanese</code><br>
+具体文件结构为：</p>
+<ul>
+<li><code>10xx.pck</code> 主线剧情</li>
+<li><code>20xx.pck</code> 角色传说任务</li>
+<li><code>30xx.pck</code> 邀约</li>
+<li><code>50xx.pck</code> 我们终将重逢等</li>
+<li><code>External</code> 活动语音等</li>
+</ul>
+<p><code>pck</code>文件，需要通过<code>Extractor v2.5</code>提取。<a href="https://www.jb51.net/softs/73080.html">下载</a></p>
+<h2 id="22-提取后语音包解密">2.2 提取后语音包解密</h2>
+<p>通过<code>vgmstream CLI</code>进行。<a href="https://github.com/vgmstream/vgmstream/releases/">Git</a><br>
+用<code>cmd</code>批量执行命令行</p>
+<pre><code class="language-cmd">FOR %F IN (*.wav) DO &quot;path/to/test.exe&quot; &quot;%~nxF&quot;
+</code></pre>
+<p>#3. 补充<br>
+有人做了语音识别，可参考快速找到想要的文件。注意，各游戏版本对应关系不同。<a href="https://www.bilibili.com/read/cv8595206">bilibili</a><br>
+哪怕是传说任务，也有一堆非主角的话，特别是派蒙，记得删。<br>
+如果有精力，可以跑个<a href="https://github.com/google/uis-rnn">人声聚类模型</a>来自动区分说话人，但是我懒。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://mizore.cloud/post/free-fonts/">
+                  <h3 class="post-title">
+                    【档案馆】免费商用字体整理
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '5ad3165efce8e337a860',
+        clientSecret: '98d8dc289346a0b99773dd146ddc4ae7479f83af',
+        repo: 'mizore-cloud.github.io',
+        owner: 'mizore-cloud',
+        admin: ['mizore-cloud'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

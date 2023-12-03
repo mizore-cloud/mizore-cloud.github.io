@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://mizore.cloud</id>
+    <title>一片雨夹雪云</title>
+    <updated>2023-12-03T13:30:03.950Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://mizore.cloud"/>
+    <link rel="self" href="https://mizore.cloud/atom.xml"/>
+    <subtitle>きみの全部が好き</subtitle>
+    <logo>https://mizore.cloud/images/avatar.png</logo>
+    <icon>https://mizore.cloud/favicon.ico</icon>
+    <rights>All rights reserved 2023, 一片雨夹雪云</rights>
+    <entry>
+        <title type="html"><![CDATA[通过Aegisub实现简易歌词文字效果]]></title>
+        <id>https://mizore.cloud/post/Aegisub-Lryic-Effect-Guide/</id>
+        <link href="https://mizore.cloud/post/Aegisub-Lryic-Effect-Guide/">
+        </link>
+        <updated>2023-12-03T13:01:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>相比于大型非编软件，通过Aegisub这类轻量级字幕工具实现歌词动效，操作简便，灵活性高。<br>
+然而，Aeg并非主流字幕软件，涉及特效部分更是如此。比较方便搜到的公开中文资料只有vmoe组内部的那个施工了一半的教程。实际参考性并不是很高。而由于鄙人半退坑已经有一段时间，所以之前整理的内部资料也不知道丢到什么地方去了。索性重新翻回Aegisub的英文文档和卡拉OK渲染器的原始脚本，重新整理一份相对比较直观的教程，也作为后续相关作业的记录。</p>
+<p>我想实现的功能很简单，就是比简陋稍微复杂一点的纯文字PV。<br>
+之前偷懒直接用<code>fad</code>标签，也就是全句淡入淡出。<br>
+这就是我说的有些「简陋」的方式。但是只要一遍轴之后，一键生成，效率比PR/AE绣花高到不知道哪里去了。</p>
+<p>其实我们观察一些稍微复杂点的文本动画的话，无非就是逐个蹦字、拆笔画重组、<br>
+模糊到清晰、随机闪烁、大小变换、分块渐显等。<br>
+排除拆笔画这类涉及图形化的操作，单纯的透明度（显隐）、位置、字号、模糊程度等，<br>
+ASS字幕标签完全可以控制。配合动效代码，轻松摆脱AE这个多高配置都给你吃满的坑货。<br>
+这也就是这个企划的目的。</p>
+<p>本企划计划从Aegisub自带的卡拉OK字幕生成器解析原理入手，先讲清效果机制，再拿出几种看起来比较好实现的例子，分析并给出模板。希望可以在授人以鱼的同时授人以渔。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[某二次元游戏语音解包纪实]]></title>
+        <id>https://mizore.cloud/post/mou-er-ci-yuan-you-xi-yu-yin-jie-bao-ji-shi/</id>
+        <link href="https://mizore.cloud/post/mou-er-ci-yuan-you-xi-yu-yin-jie-bao-ji-shi/">
+        </link>
+        <updated>2023-03-07T17:59:59.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="1-背景">1. 背景</h1>
+<p>提取游戏语音用于炼丹训练集</p>
+<h1 id="2-方法">2. 方法</h1>
+<h2 id="21-提取语音包">2.1 提取语音包</h2>
+<p>某游戏语音包位置：<code>A 2-jigen Game/A 2-jigen Game/A 2-jigen Game_Data/StreamingAssets/Audio/GeneratedSoundBanks/Windows/Japanese</code><br>
+具体文件结构为：</p>
+<ul>
+<li><code>10xx.pck</code> 主线剧情</li>
+<li><code>20xx.pck</code> 角色传说任务</li>
+<li><code>30xx.pck</code> 邀约</li>
+<li><code>50xx.pck</code> 我们终将重逢等</li>
+<li><code>External</code> 活动语音等</li>
+</ul>
+<p><code>pck</code>文件，需要通过<code>Extractor v2.5</code>提取。<a href="https://www.jb51.net/softs/73080.html">下载</a></p>
+<h2 id="22-提取后语音包解密">2.2 提取后语音包解密</h2>
+<p>通过<code>vgmstream CLI</code>进行。<a href="https://github.com/vgmstream/vgmstream/releases/">Git</a><br>
+用<code>cmd</code>批量执行命令行</p>
+<pre><code class="language-cmd">FOR %F IN (*.wav) DO &quot;path/to/test.exe&quot; &quot;%~nxF&quot;
+</code></pre>
+<p>#3. 补充<br>
+有人做了语音识别，可参考快速找到想要的文件。注意，各游戏版本对应关系不同。<a href="https://www.bilibili.com/read/cv8595206">bilibili</a><br>
+哪怕是传说任务，也有一堆非主角的话，特别是派蒙，记得删。<br>
+如果有精力，可以跑个<a href="https://github.com/google/uis-rnn">人声聚类模型</a>来自动区分说话人，但是我懒。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【档案馆】免费商用字体整理]]></title>
+        <id>https://mizore.cloud/post/free-fonts/</id>
+        <link href="https://mizore.cloud/post/free-fonts/">
+        </link>
+        <updated>2023-03-06T15:29:17.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="0-说明">0. 说明</h1>
+<p>做博主，自然免不了各种版权问题。字体版权就是其中比较容易被忽视的一个。<br>
+虽说传视频网站算不算商用，有点灰色地带的味道。不过安全起见，选择免费商用一定是最安全的。<br>
+无论是做视频，还是单纯的字幕、海报之类的，都用得上。</p>
+<h1 id="1-sans-serif-黑体-ゴシック-系列">1. Sans Serif / 黑体 / ゴシック 系列</h1>
+<h2 id="11-思源黑体">1.1 思源黑体</h2>
+<ul>
+<li>年轻人的第一款开源字体</li>
+<li>原生简繁日英</li>
+<li>新版(v3)支持可变字体<br>
+思源系列应该是最著名的开源字体了。自从人们发现微软雅黑其实并不能商用之后，作为第一备选出现的思源系列可以说是救命一样的存在了。不过缺点就是丑。<br>
+<a href="https://github.com/adobe-fonts/source-han-sans/blob/master/README-CN.md">地址</a></li>
+</ul>
+<h2 id="12-霞鹜新晰黑">1.2 霞鹜新晰黑</h2>
+<ul>
+<li>IPAexゴシック本地化</li>
+<li>霞鹜文楷团队作品<br>
+最近霞鹜文楷团队动作不小。</li>
+</ul>
+<p><a href="https://github.com/lxgw/LxgwNeoXiHei">地址</a></p>
+<h2 id="13-ロゴたいぷゴシック">1.3 ロゴたいぷゴシック</h2>
+<ul>
+<li>LOGO用日语字体<br>
+<a href="https://logotype.jp/corporate-logo-font-dl.html#i-6">地址</a></li>
+</ul>
+<h1 id="1a-圆体-非标准黑体">1a. 圆体 / 非标准黑体</h1>
+<h2 id="1a1-源柔ゴシック">1a.1 源柔ゴシック</h2>
+<p><a href="https://www.fontmatome.com/genjyu-gothic/">地址</a></p>
+<h2 id="1a2-霞鹜漫黑">1a.2 霞鹜漫黑</h2>
+<p><a href="https://github.com/lxgw/LxgwMarkerGothic">地址</a></p>
+<h2 id="1a3-やさしさゴシック">1a.3 やさしさゴシック</h2>
+<p><a href="http://www.fontna.com/blog/379/">地址</a></p>
+<h1 id="2-serif-宋体-明朝">2. Serif / 宋体 / 明朝</h1>
+<h2 id="11-思源宋体">1.1 思源宋体</h2>
+<p>说明同上。<br>
+<a href="https://github.com/adobe-fonts/source-han-serif/blob/master/README-CN.md">地址</a></p>
+<h2 id="12-霞鹜文楷">1.2 霞鹜文楷</h2>
+<ul>
+<li>优雅</li>
+<li>日版为FOT的<a href="https://github.com/fontworks-fonts/Klee">可莉</a> <s>有o</s></li>
+<li>就是有点太细了，需要加粗使用<br>
+没啥说的，以前我最喜欢的就是文艺上天的紫罗兰体：<a href="https://www.foundertype.com/index.php/FontInfo/index/id/4983">筑紫明朝</a>，但这玩意儿虽然方正联动出了国行，依然毋庸置疑地要买授权。所以就用这个来替代吧。<br>
+<a href="https://github.com/lxgw/LxgwWenKai">地址</a></li>
+</ul>
+<h2 id="13-花园明朝">1.3 花园明朝</h2>
+<ul>
+<li>也挺优雅的（全季酒店风）</li>
+<li>部分简中支持<br>
+<a href="http://fonts.jp/hanazono/">地址</a></li>
+</ul>
+<h1 id="3-艺术体">3. 艺术体</h1>
+<h2 id="31-得意黑">3.1 得意黑</h2>
+<ul>
+<li>央视都在用</li>
+<li>突然变成了年轻人第一个开源字体2.0</li>
+<li>就是有点扁<br>
+六蛋老师出品。<br>
+<a href="https://github.com/atelier-anchor/smiley-sans/releases">地址</a></li>
+</ul>
+<h2 id="32-にくまるフォント">3.2 にくまるフォント</h2>
+<ul>
+<li>偶然看到的好康的<br>
+<a href="http://www.fontna.com/blog/1651/">地址</a></li>
+</ul>
+<h2 id="33-小赖字体">3.3 小赖字体</h2>
+<ul>
+<li>可爱</li>
+<li>基于濑户字体</li>
+<li>濑户字体设计师也叫のぞみ<br>
+<a href="https://github.com/lxgw/kose-font">地址</a></li>
+</ul>
+]]></content>
+    </entry>
+</feed>

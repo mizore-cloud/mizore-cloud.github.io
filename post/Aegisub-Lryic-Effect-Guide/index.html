@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>通过Aegisub实现简易歌词文字效果 | 一片雨夹雪云</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mizore.cloud/favicon.ico?v=1701610202259">
+<link rel="stylesheet" href="https://mizore.cloud/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="前言
+相比于大型非编软件，通过Aegisub这类轻量级字幕工具实现歌词动效，操作简便，灵活性高。
+然而，Aeg并非主流字幕软件，涉及特效部分更是如此。比较方便搜到的公开中文资料只有vmoe组内部的那个施工了一半的教程。实际参考性并不是很高。..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://mizore.cloud">
+        <img src="https://mizore.cloud/images/avatar.png?v=1701610202259" class="site-logo">
+        <h1 class="site-title">一片雨夹雪云</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      きみの全部が好き
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> · <a href="https://xsky123.com">Ideahouse</a> | <a class="rss" href="https://mizore.cloud/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">通过Aegisub实现简易歌词文字效果</h2>
+            <div class="post-date">2023-12-03</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="前言">前言</h1>
+<p>相比于大型非编软件，通过Aegisub这类轻量级字幕工具实现歌词动效，操作简便，灵活性高。<br>
+然而，Aeg并非主流字幕软件，涉及特效部分更是如此。比较方便搜到的公开中文资料只有vmoe组内部的那个施工了一半的教程。实际参考性并不是很高。而由于鄙人半退坑已经有一段时间，所以之前整理的内部资料也不知道丢到什么地方去了。索性重新翻回Aegisub的英文文档和卡拉OK渲染器的原始脚本，重新整理一份相对比较直观的教程，也作为后续相关作业的记录。</p>
+<p>我想实现的功能很简单，就是比简陋稍微复杂一点的纯文字PV。<br>
+之前偷懒直接用<code>fad</code>标签，也就是全句淡入淡出。<br>
+这就是我说的有些「简陋」的方式。但是只要一遍轴之后，一键生成，效率比PR/AE绣花高到不知道哪里去了。</p>
+<p>其实我们观察一些稍微复杂点的文本动画的话，无非就是逐个蹦字、拆笔画重组、<br>
+模糊到清晰、随机闪烁、大小变换、分块渐显等。<br>
+排除拆笔画这类涉及图形化的操作，单纯的透明度（显隐）、位置、字号、模糊程度等，<br>
+ASS字幕标签完全可以控制。配合动效代码，轻松摆脱AE这个多高配置都给你吃满的坑货。<br>
+这也就是这个企划的目的。</p>
+<p>本企划计划从Aegisub自带的卡拉OK字幕生成器解析原理入手，先讲清效果机制，再拿出几种看起来比较好实现的例子，分析并给出模板。希望可以在授人以鱼的同时授人以渔。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://mizore.cloud/post/mou-er-ci-yuan-you-xi-yu-yin-jie-bao-ji-shi/">
+                  <h3 class="post-title">
+                    某二次元游戏语音解包纪实
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '5ad3165efce8e337a860',
+        clientSecret: '98d8dc289346a0b99773dd146ddc4ae7479f83af',
+        repo: 'mizore-cloud.github.io',
+        owner: 'mizore-cloud',
+        admin: ['mizore-cloud'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
